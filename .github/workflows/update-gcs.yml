@@ -1,0 +1,39 @@
+name: Update Existing Files in GCS
+
+on:
+  push:
+    branches:
+      - main  # Trigger on commits to the main branch
+
+jobs:
+  update-existing-files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: 'latest'
+        service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+    - name: Authenticate to GCP
+      run: gcloud auth activate-service-account --key-file=/github/workspace/key.json
+
+    - name: Get changed files
+      id: changed-files
+      run: |
+        # List files changed in the last commit
+        git diff --name-only HEAD^ HEAD > changed_files.txt
+        cat changed_files.txt
+
+    - name: Update existing files in GCS
+      if: success()
+      run: |
+        # Update each changed file in GCS
+        while IFS= read -r file; do
+          echo "Updating $file in GCS..."
+          gsutil cp "$file" gs://github-bucket1/"$file"
+        done < changed_files.txt
