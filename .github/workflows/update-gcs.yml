@@ -20,7 +20,9 @@ jobs:
         service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
     - name: Authenticate to GCP
-      run: gcloud auth activate-service-account --key-file=/github/workspace/key.json
+      run: |
+        echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > key.json
+        gcloud auth activate-service-account --key-file=key.json
 
     - name: Get changed files
       id: changed-files
