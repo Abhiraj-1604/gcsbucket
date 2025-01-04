@@ -26,8 +26,14 @@ jobs:
     - name: Get changed files
       id: changed-files
       run: |
-        # List files added, modified, or renamed in the latest commit
-        git diff --name-only --diff-filter=AMR HEAD^ HEAD > changed_files.txt
+        # Check if this is the first commit
+        if [ $(git rev-list --count HEAD) -eq 1 ]; then
+          echo "First commit detected. Listing all files..."
+          git ls-files > changed_files.txt
+        else
+          echo "Listing files added, modified, or renamed in the latest commit..."
+          git diff --name-only --diff-filter=AMR HEAD^ HEAD > changed_files.txt
+        fi
         cat changed_files.txt
 
     - name: Upload or update files in GCS
