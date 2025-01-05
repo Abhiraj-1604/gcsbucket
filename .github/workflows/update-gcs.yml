@@ -46,13 +46,16 @@ jobs:
         git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep '\.md$' > changed_md_files.txt || true
         cat changed_md_files.txt
 
+    - name: Clone public repository
+      run: |
+        git clone https://github.com/Abhiraj-1604/cloudhustlerpublic.git cloudhustlerpublic
+      env:
+        PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+
     - name: Run job for .md files only
       if: steps.changed-md-files.outputs.changed_files != ''
       run: |
-        git config --global user.name "Abhiraj-1604"
-        git config --global user.email "abhirajrode2004@gmail.com"
-        
-        git clone https://github.com/Abhiraj-1604/cloudhustlerpublic.git
+        cd cloudhustlerpublic
         while IFS= read -r file; do
           echo "Copying $file to the public repository..."
           cp "$file" cloudhustlerpublic/
