@@ -1,4 +1,4 @@
-name: Upload or Update Files in GCS (Flatten Structure)
+name: Upload or Update Files in GCS and Public Repo (Flatten Structure)
 
 on:
   push:
@@ -23,20 +23,20 @@ jobs:
       with:
         version: 'latest'
 
-    - name: Get changed files (excluding .md, .yml, and .txt files)
+    - name: Get changed .sh files
       id: changed-files
       run: |
         # Check if this is the first commit
         if [ $(git rev-list --count HEAD) -eq 1 ]; then
-          echo "First commit detected. Listing all files except .md, .yml, and .txt files..."
-          git ls-files | grep -v '\.md$' | grep -v '\.yml$' | grep -v '\.txt$' > changed_files.txt
+          echo "First commit detected. Listing all .sh files..."
+          git ls-files '*.sh' > changed_files.txt
         else
-          echo "Listing added, modified, or renamed files in the latest commit, excluding .md, .yml, and .txt files..."
-          git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep -v '\.md$' | grep -v '\.yml$' | grep -v '\.txt$' > changed_files.txt || true
+          echo "Listing added, modified, or renamed .sh files in the latest commit..."
+          git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep '\.sh$' > changed_files.txt || true
         fi
         cat changed_files.txt
 
-    - name: Upload or update files in GCS (Flattened)
+    - name: Upload or update .sh files in GCS (Flattened)
       if: success()
       run: |
         while IFS= read -r file; do
@@ -44,7 +44,7 @@ jobs:
           if [ -f "$file" ]; then
             base_name=$(basename "$file")
             echo "Uploading $file as $base_name in GCS..."
-            gsutil cp "$file" gs://cloudhustlers/"$base_name"
+            gsutil cp "$file" gs://cloudhustlers/"$base_name" 
           else
             echo "File $file does not exist locally. Skipping..."
           fi
@@ -69,31 +69,31 @@ jobs:
       env:
         PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
 
-    - name: Get changed .md files
-      id: changed-md-files
+    - name: Get changed files (excluding .sh, .txt, and .yml)
+      id: changed-files
       run: |
         # Check if this is the first commit
         if [ $(git rev-list --count HEAD) -eq 1 ]; then
-          echo "First commit detected. Listing all .md files..."
-          git ls-files '*.md' > changed_md_files.txt
+          echo "First commit detected. Listing all files excluding .sh, .txt, and .yml files..."
+          git ls-files | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' > changed_files.txt
         else
-          echo "Listing added, modified, or renamed .md files in the latest commit..."
-          git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep '\.md$' > changed_md_files.txt || true
+          echo "Listing added, modified, or renamed files excluding .sh, .txt, and .yml files..."
+          git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' > changed_files.txt || true
         fi
-        cat changed_md_files.txt
+        cat changed_files.txt
 
-    - name: Copy .md files to public repository
+    - name: Copy files (excluding .sh, .txt, and .yml) to public repository
       run: |
         while IFS= read -r file; do
           echo "Copying $file to the public repository..."
           cp "$file" Lab_Solutions/
-        done < changed_md_files.txt
+        done < changed_files.txt
 
     - name: Commit and push changes to public repository
       run: |
         cd Lab_Solutions
         git add .  # Add all changes
-        git commit -m "Update .md files"
+        git commit -m "Update files excluding .sh, .txt, and .yml"
         git push https://Abhishek-kumar-202063:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Abhishek-kumar-202063/Lab_Solutions.git
       env:
         PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
