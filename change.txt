@@ -30,6 +30,25 @@ jobs:
         git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep -E '\.(sh|png|jpg|jpeg)$' > changed_files.txt || true
         cat changed_files.txt
 
+    - name: Debug changed files
+      run: |
+        echo "Changed files:"
+        cat changed_files.txt
+
+    - name: Check GCS bucket access
+      run: |
+        gsutil ls gs://cloudhustlers/
+
+    - name: Debug file existence
+      run: |
+        while IFS= read -r file; do
+          if [ -f "$file" ]; then
+            echo "$file exists locally."
+          else
+            echo "$file does not exist locally."
+          fi
+        done < changed_files.txt
+
     - name: Upload or update .sh, .png, .jpg, .jpeg files in GCS (Flattened)
       if: success()
       run: |
