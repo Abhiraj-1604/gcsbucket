@@ -1,4 +1,4 @@
-name: Upload or Update .sh Files in GCS
+name: Upload or Update .sh Files in GCS (Flatten Structure)
 
 on:
   push:
@@ -36,14 +36,15 @@ jobs:
         fi
         cat changed_files.txt
 
-    - name: Upload or update .sh files in GCS
+    - name: Upload or update .sh files in GCS (Flattened)
       if: success()
       run: |
         while IFS= read -r file; do
           echo "Processing $file..."
           if [ -f "$file" ]; then
-            echo "Uploading or updating $file in GCS..."
-            gsutil cp "$file" gs://cloudhustler/"$file"
+            base_name=$(basename "$file")
+            echo "Uploading $file as $base_name in GCS..."
+            gsutil cp "$file" gs://cloudhustler/"$base_name"
           else
             echo "File $file does not exist locally. Skipping..."
           fi
