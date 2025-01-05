@@ -49,3 +49,51 @@ jobs:
             echo "File $file does not exist locally. Skipping..."
           fi
         done < changed_files.txt
+
+  upload-md-files-to-public-repo:
+    runs-on: ubuntu-latest
+    needs: upload-update-sh-files  # Ensures this runs after the .sh files are uploaded
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Git
+      run: |
+        git config --global user.name "Abhiraj-1604"
+        git config --global user.email "abhirajrode2004@gmail.com"
+
+    - name: Clone public repository
+      run: |
+        git clone https://github.com/Abhiraj-1604/cloudhustlerpublic.git
+      env:
+        PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+
+    - name: Get changed .md files
+      id: changed-md-files
+      run: |
+        # Check if this is the first commit
+        if [ $(git rev-list --count HEAD) -eq 1 ]; then
+          echo "First commit detected. Listing all .md files..."
+          git ls-files '*.md' > changed_md_files.txt
+        else
+          echo "Listing added, modified, or renamed .md files in the latest commit..."
+          git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep '\.md$' > changed_md_files.txt || true
+        fi
+        cat changed_md_files.txt
+
+    - name: Copy .md files to public repository
+      run: |
+        while IFS= read -r file; do
+          echo "Copying $file to the public repository..."
+          cp "$file" cloudhustlerpublic/
+        done < changed_md_files.txt
+
+    - name: Commit and push changes to public repository
+      run: |
+        cd cloudhustlerpublic
+        git add .  # Add all changes
+        git commit -m "Update .md files"
+        git push https://Abhiraj-1604:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Abhiraj-1604/cloudhustlerpublic.git
+      env:
+        PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
