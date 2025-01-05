@@ -22,19 +22,19 @@ jobs:
 
       - name: Clone public repository
         run: |
-          git clone https://github.com/Abhiraj-1604/cloudhustlerpublic.git cloudhustlerpublic.git
+          git clone https://github.com/Abhiraj-1604/cloudhustlerpublic.git
         env:
           PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
 
       - name: Copy .md files to public repository
         run: |
-          cp -r *.md public-repo/  # Adjust path if needed
+          cp -r *.md cloudhustlerpublic/  # Copy all .md files to the cloned public repo
         working-directory: ${{ github.workspace }}
 
       - name: Commit and push changes to public repository
         run: |
-          cd public-repo
-          git add .
+          cd cloudhustlerpublic  # Navigate to the public repo folder
+          git add .  # Add all changes
           git commit -m "Update .md files"
           git push https://Abhiraj-1604:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Abhiraj-1604/cloudhustlerpublic.git
         env:
