@@ -52,6 +52,11 @@ jobs:
       env:
         PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
 
+    - name: Set up Git user
+      run: |
+        git config --global user.name "Abhiraj-1604"
+        git config --global user.email "abhirajrode2004@gmail.com"
+
     - name: Run job for .md files only
       if: steps.changed-md-files.outputs.changed_files != ''
       run: |
