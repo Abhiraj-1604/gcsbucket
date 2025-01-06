@@ -1,4 +1,4 @@
-this script will upload and update all the files excluding .md, .txt, .yml in gcs bucket and only upload and update .md files in public repo (without preserving structure)
+#this script will upload and update all the files excluding .md, .txt, .yml in gcs bucket and only upload and update .md files in public repo (without preserving structure)
 
 
 name: Upload or Update Files in GCS (Flatten Structure)
