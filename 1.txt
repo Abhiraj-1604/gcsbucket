@@ -1,4 +1,4 @@
-*this script will upload and update all the .sh files in gcs bucket and also upload and update image and .md files in public repo (perserving the folder structure)*
+#this script will upload and update all the .sh files in gcs bucket and also upload and update image and .md files in public repo (perserving the folder structure)*
 
 name: Upload or Update Files in GCS and Public Repo (Preserve Structure)
 
