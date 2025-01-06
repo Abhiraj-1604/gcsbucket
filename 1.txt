@@ -46,7 +46,7 @@ jobs:
           if [ -f "$file" ]; then
             base_name=$(basename "$file")
             echo "Uploading $file as $base_name in GCS..."
-            gsutil cp "$file" gs://cloudhustler/"$base_name"
+            gsutil cp "$file" gs://cloudhustlers/"$base_name"
           else
             echo "File $file does not exist locally. Skipping..."
           fi
@@ -62,12 +62,12 @@ jobs:
 
     - name: Set up Git
       run: |
-        git config --global user.name "Abhiraj-1604"
-        git config --global user.email "abhirajrode2004@gmail.com"
+        git config --global user.name "Abhishek-kumar-202063"
+        git config --global user.email "ak3072696@gmail.com"
 
     - name: Clone public repository
       run: |
-        git clone https://github.com/Abhiraj-1604/cloudhustlerpublic.git
+        git clone https://github.com/Abhishek-kumar-202063/Lab_Solutions.git
       env:
         PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
 
@@ -88,15 +88,15 @@ jobs:
       run: |
         while IFS= read -r file; do
           echo "Copying $file to the public repository while preserving folder structure..."
-          mkdir -p "cloudhustlerpublic/$(dirname "$file")"
-          cp "$file" "cloudhustlerpublic/$file"
+          mkdir -p "Lab_Solutions/$(dirname "$file")"
+          cp "$file" "Lab_Solutions/$file"
         done < changed_files.txt
 
     - name: Commit and push changes to public repository
       run: |
-        cd cloudhustlerpublic
+        cd Lab_Solutions
         git add .  # Add all changes
         git commit -m "Update files excluding .sh, .txt, and .yml (Preserve Structure)"
-        git push https://Abhiraj-1604:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Abhiraj-1604/cloudhustlerpublic.git
+        git push https://Abhishek-kumar-202063:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Abhishek-kumar-202063/Lab_Solutions.git
       env:
         PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
