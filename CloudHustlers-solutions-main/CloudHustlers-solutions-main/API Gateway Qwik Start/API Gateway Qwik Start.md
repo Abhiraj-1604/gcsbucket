@@ -18,3 +18,6 @@ sudo chmod +x gsp872.sh
 ```
 
 ### Congratulations for completing the Lab !
+
+[![Watch the video](https://img.youtube.com/vi/ATIi1HbTyQc/0.jpg)](https://youtu.be/ATIi1HbTyQc?si=HS5O17FfsPBee12J)
+
