@@ -1,5 +1,5 @@
 
-![API Gateway Banner](https://github.com/Abhiraj-1604/cloudhustlerpublic/blob/main/CloudHustlers-solutions-main/APIs%20Explorer%20Qwik%20Start/demo-image.jpg)
+![API Gateway Banner](https://github.com/Abhiraj-1604/gcsbucket/blob/22b2f7966d9fb2ce50f7c665c8d4c8cfa4d80c34/CloudHustlers-solutions-main/CloudHustlers-solutions-main/APIs%20Explorer%20Cloud%20Storage/demo-image1.png)
 
 # API Gateway: Qwik Start || [GSP872]
 
