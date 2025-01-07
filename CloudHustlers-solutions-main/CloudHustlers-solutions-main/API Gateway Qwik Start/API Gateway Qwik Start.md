@@ -1,7 +1,7 @@
 
 ![API Gateway Banner](https://github.com/Abhiraj-1604/gcsbucket/blob/cd5a79c3b8251e85303f240c57d6a25411449897/channels4_banner.jpg)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/fb121d0584d5eb8e8f3afd11b1acaa75310b8dbe/gif/235294011-b8074c31-9097-4a65-a594-4151b58743a8.gif" alt="Logo 1" width="80">
+  <img src="https://user-images.githubusercontent.com/74038190/235294011-b8074c31-9097-4a65-a594-4151b58743a8.gif" alt="Logo 1" width="80">
   <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/fb121d0584d5eb8e8f3afd11b1acaa75310b8dbe/gif/235294012-0a55e343-37ad-4b0f-924f-c8431d9d2483.gif" alt="Logo 2" width="80">
   <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/fb121d0584d5eb8e8f3afd11b1acaa75310b8dbe/gif/235294013-a33e5c43-a01c-43f6-b44d-a406d8b4ab75.gif" alt="Logo 3" width="80">
   <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/fb121d0584d5eb8e8f3afd11b1acaa75310b8dbe/gif/235294015-47144047-25ab-417c-af1b-6746820a20ff.gif" alt="Logo 4" width="80">
