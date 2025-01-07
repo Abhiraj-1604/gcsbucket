@@ -1,12 +1,12 @@
 
 ![API Gateway Banner](https://github.com/Abhiraj-1604/gcsbucket/blob/cd5a79c3b8251e85303f240c57d6a25411449897/channels4_banner.jpg)
-<p align="center">
-  <img src="https://imgur.com/a/4IWdkMA" alt="Twitter" width="50">
-  <img src="https://i.imgur.com/BVGqQo3.gif" alt="LinkedIn" width="50">
-  <img src="https://i.imgur.com/M60CQm4.gif" alt="Instagram" width="50">
-  <img src="https://i.imgur.com/mTWcmnM.gif" alt="Discord" width="50">
-  <img src="https://i.imgur.com/JZZOU2u.gif" alt="WhatsApp" width="50">
-</p>
+## Connect with Cloud Hustlers
+
+- [**WhatsApp Group**](https://whatsapp.cloudhustlers.in)  
+- [**LinkedIn Page**](https://in.linkedin.com/company/cloud-hustlers)  
+- [**Instagram**](https://instagram.com/cloud_hustlers)  
+- [**GitHub**](https://github.com/CloudHustlers-Official)  
+
 
 
 
