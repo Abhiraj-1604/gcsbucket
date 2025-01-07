@@ -1,3 +1,6 @@
+
+![API Gateway Banner](https://github.com/Abhiraj-1604/cloudhustlerpublic/blob/main/CloudHustlers-solutions-main/APIs%20Explorer%20Qwik%20Start/demo-image.jpg)
+
 # API Gateway: Qwik Start || [GSP872]
 
 ### Run the following Commands in Cloud Shell
