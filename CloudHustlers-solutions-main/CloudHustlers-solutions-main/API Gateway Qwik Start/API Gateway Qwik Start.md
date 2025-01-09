@@ -1,5 +1,5 @@
 
-![API Gateway Banner](https://github.com/Abhiraj-1604/gcsbucket/blob/f0927ffbcdac19c25323d9645de61987466f74b7/banner.md)
+{% include banner.md %}
 # Connect with Cloud Hustlers
 
 
