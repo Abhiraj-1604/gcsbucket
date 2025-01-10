@@ -24,7 +24,7 @@
 
 <div align="center">
   
-### Congratulations for completing the Lab !
+## Congratulations for completing the Lab !
 
 </div>
 <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/d5b707830205a8109350f5bd15cc77ad844752e0/gif/AW356234_04.gif" align="right" width="300">
