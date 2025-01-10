@@ -29,12 +29,12 @@
 </div>
 <img src="https://github.com/Abhiraj-1604/gcsbucket/blob/ad763e250f997176fc366de152d1a80a47a14d00/gif/AW356234_04-ezgif.com-reverse.gif" align="right" width="500">
 
-
 <p align="left">
-  <img src="https://img.youtube.com/vi/8bQOoeeif7A/maxresdefault.jpg" width="200">
-
-[![YouTube Video Thumbnail](https://img.youtube.com/vi/8bQOoeeif7A/maxresdefault.jpg)](https://youtu.be/8bQOoeeif7A)
+  <a href="https://youtu.be/8bQOoeeif7A">
+    <img src="https://img.youtube.com/vi/8bQOoeeif7A/maxresdefault.jpg" width="200">
+  </a>
 </p>
+
 
 
 
