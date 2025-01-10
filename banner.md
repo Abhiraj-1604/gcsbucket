@@ -1,7 +1,7 @@
 ![API Gateway Banner](https://github.com/Abhiraj-1604/gcsbucket/blob/659e23c902449b91c536e3e15763eeae8d8728ff/gif/11.gif)
 <div align="center">
   
-# Connect with Cloud Hustlers
+# Connect with Cloud Hustlers Community
 </div>
 
 <p align="center">
