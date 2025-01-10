@@ -23,5 +23,6 @@
 </p>
 
 ### Congratulations for completing the Lab !
+<img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/d5b707830205a8109350f5bd15cc77ad844752e0/gif/AW356234_04.gif" align="right" width="300">
 
 [![Watch the video](https://img.youtube.com/vi/ATIi1HbTyQc/0.jpg)](https://youtu.be/ATIi1HbTyQc?si=HS5O17FfsPBee12J)
