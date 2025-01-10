@@ -31,7 +31,7 @@
 
 <p align="left">
   <a href="https://youtu.be/8bQOoeeif7A">
-    <img src="https://img.youtube.com/vi/8bQOoeeif7A/maxresdefault.jpg" width="2000">
+    <img src="https://img.youtube.com/vi/8bQOoeeif7A/maxresdefault.jpg" width="500">
   </a>
 </p>
 
