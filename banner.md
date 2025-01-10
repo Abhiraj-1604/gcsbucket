@@ -14,7 +14,7 @@
   <a href="https://instagram.com/cloud_hustlers" target="_blank">
     <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/main/gif/235294013-a33e5c43-a01c-43f6-b44d-a406d8b4ab75.gif" alt="Instagram" width="80">
   </a>
-  <a href="https://github.com/CloudHustlers-Official" target="_blank">
+  <a href="https://discord.gg/nXvDCWWN" target="_blank">
     <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/main/gif/235294015-47144047-25ab-417c-af1b-6746820a20ff.gif" alt="GitHub" width="80">
   </a>
 </p>
