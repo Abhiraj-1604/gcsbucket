@@ -8,6 +8,9 @@
   <a href="https://in.linkedin.com/company/cloud-hustlers" target="_blank">
     <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/main/gif/235294012-0a55e343-37ad-4b0f-924f-c8431d9d2483.gif" alt="LinkedIn" width="80">
   </a>
+  <a href="https://in.linkedin.com/company/cloud-hustlers" target="_blank">
+    <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/main/gif/235294012-0a55e343-37ad-4b0f-924f-c8431d9d2483.gif" alt="LinkedIn" width="80">
+  </a>
   <a href="https://instagram.com/cloud_hustlers" target="_blank">
     <img src="https://raw.githubusercontent.com/Abhiraj-1604/gcsbucket/main/gif/235294013-a33e5c43-a01c-43f6-b44d-a406d8b4ab75.gif" alt="Instagram" width="80">
   </a>
