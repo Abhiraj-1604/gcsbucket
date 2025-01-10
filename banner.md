@@ -1,4 +1,4 @@
-![API Gateway Banner](https://github.com/Abhiraj-1604/gcsbucket/blob/cd5a79c3b8251e85303f240c57d6a25411449897/channels4_banner.jpg)
+![API Gateway Banner](https://github.com/Abhiraj-1604/gcsbucket/blob/659e23c902449b91c536e3e15763eeae8d8728ff/gif/11.gif)
 # Connect with Cloud Hustlers
 
 <p align="center">
