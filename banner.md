@@ -32,9 +32,10 @@
 
 <p align="left">
   <img src="https://img.youtube.com/vi/8bQOoeeif7A/maxresdefault.jpg" width="200">
-</p>
 
 [![YouTube Video Thumbnail](https://img.youtube.com/vi/8bQOoeeif7A/maxresdefault.jpg)](https://youtu.be/8bQOoeeif7A)
+</p>
+
 
 
 
