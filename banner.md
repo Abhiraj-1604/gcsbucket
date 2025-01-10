@@ -27,7 +27,7 @@
 ## Congratulations for completing the Lab !
 
 </div>
-<img src="https://github.com/Abhiraj-1604/gcsbucket/blob/ad763e250f997176fc366de152d1a80a47a14d00/gif/AW356234_04-ezgif.com-reverse.gif" align="right" width="500">
+<img src="https://github.com/Abhiraj-1604/gcsbucket/blob/ad763e250f997176fc366de152d1a80a47a14d00/gif/AW356234_04-ezgif.com-reverse.gif" align="right" width="400">
 
 <p align="left">
   <a href="https://youtu.be/8bQOoeeif7A">
