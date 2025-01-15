@@ -26,8 +26,14 @@ jobs:
       - name: Get changed .sh files
         id: changed-files
         run: |
-          # List only modified or added .sh files
-          git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep '\.sh$' > changed_files.txt || true
+          # Check if this is the first commit (no previous commit exists)
+          if [ $(git rev-list --count HEAD) -eq 1 ]; then
+            echo "First commit detected. Listing all .sh files..."
+            git ls-files '*.sh' > changed_files.txt
+          else
+            echo "Listing added, modified, or renamed .sh files in the latest commit..."
+            git diff --name-only --diff-filter=AMR HEAD~1 HEAD | grep '\.sh$' > changed_files.txt || true
+          fi
           cat changed_files.txt
 
       - name: Upload or update .sh files in GCS (Flattened)
@@ -72,7 +78,7 @@ jobs:
             git ls-files | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' > changed_files.txt
           else
             echo "Listing added, modified, or renamed files excluding .sh, .txt, and .yml files..."
-            git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' > changed_files.txt || true
+            git diff --name-only --diff-filter=AMR HEAD~1 HEAD | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' > changed_files.txt || true
           fi
           cat changed_files.txt
 
