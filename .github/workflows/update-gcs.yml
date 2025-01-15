@@ -10,23 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1
-      with:
-        version: 'latest'
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: 'latest'
 
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-    - name: Upload .sh files to GCS
-      run: |
-        for file in $(git diff --name-only HEAD^ HEAD | grep '\.sh$'); do
-          if [ -f "$file" ]; then
-            gsutil cp "$file" gs://cloudhustler/"$file"
+      - name: Upload .sh files to GCS
+        run: |
+          # Get the list of changed .sh files
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\\.sh$' || true)
+          
+          # Check if there are any .sh files to upload
+          if [ -n "$CHANGED_FILES" ]; then
+            for file in $CHANGED_FILES; do
+              if [ -f "$file" ]; then
+                echo "Uploading $file to GCS..."
+                gsutil cp "$file" gs://cloudhustler/"$file"
+              fi
+            done
+          else
+            echo "No .sh files changed in this commit."
           fi
-        done
