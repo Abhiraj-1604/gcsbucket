@@ -1,91 +1,207 @@
+name: Upload or Update Files in GCS and Public Repo (Preserve Structure)
+
+
+
 on:
-  push:
-    branches:
-      - main  # Trigger on commits to the main branch
+
+  push:
+
+    branches:
+
+      - main  # Trigger on commits to the main branch
+
+
 
 jobs:
-  upload-update-files:
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  upload-update-files:
 
-      - name: Authenticate to GCP
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+    runs-on: ubuntu-latest
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          version: 'latest'
 
-      - name: Get staged .sh files (added or modified)
-        id: changed-files
-        run: |
-          git diff --cached --name-only --diff-filter=d | grep '\.sh$' > changed_files.txt
-          cat changed_files.txt
 
-      - name: Upload .sh files in GCS (Flattened)
-        if: success()
-        run: |
-          while IFS= read -r file; do
-            echo "Processing $file..."
-            if [ -f "$file" ]; then
-              base_name=$(basename "$file")
-              echo "Uploading $file to GCS as $base_name..."
-              gsutil cp "$file" gs://cloudhustler/"$base_name"
-            else
-              echo "File $file not found in the staging area. Skipping..."
-            fi
-          done < changed_files.txt
+    steps:
 
-  upload-files-to-public-repo:
-    runs-on: ubuntu-latest
-    needs: upload-update-files  # Ensures this runs after the .sh files are uploaded
+      - name: Checkout code
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "Abhiraj-1604"
-          git config --global user.email "abhirajrode2004@gmail.com"
 
-      - name: Clone public repository
-        run: |
-          git clone https://github.com/Abhiraj-1604/cloudhustlerpublic.git
-        env:
-          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
 
-      - name: Get changed files (excluding .sh, .txt, and .yml)
-        id: changed-files
-        run: |
-          # Check if this is the first commit
-          if [ $(git rev-list --count HEAD) -eq 1 ]; then
-            echo "First commit detected. Listing all files excluding .sh, .txt, and .yml files..."
-            git ls-files | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' > changed_files.txt
-          else
-            echo "Listing added, modified, or renamed files excluding .sh, .txt, and .yml files..."
-            git status --short | grep '^[AM]' | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' | awk '{print $2}' > changed_files.txt || true
-          fi
-          cat changed_files.txt
+      - name: Authenticate to GCP
 
-      - name: Copy files (excluding .sh, .txt, and .yml) to public repository (Preserve Structure)
-        run: |
-          while IFS= read -r file; do
-            echo "Copying $file to the public repository while preserving folder structure..."
-            mkdir -p "cloudhustlerpublic/$(dirname "$file")"
-            cp "$file" "cloudhustlerpublic/$file"
-          done < changed_files.txt
+        uses: google-github-actions/auth@v1
 
-      - name: Commit and push changes to public repository
-        run: |
-          cd cloudhustlerpublic
-          git add .  # Add all changes
-          git commit -m "Update files excluding .sh, .txt, and .yml (Preserve Structure)"
-          git push https://Abhiraj-1604:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Abhiraj-1604/cloudhustlerpublic.git
-        env:
-          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+        with:
+
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+
+
+      - name: Set up Google Cloud SDK
+
+        uses: google-github-actions/setup-gcloud@v1
+
+        with:
+
+          version: 'latest'
+
+
+
+      - name: Get changed .sh files
+
+        id: changed-files
+
+        run: |
+
+          # Check if this is the first commit (no previous commit exists)
+
+          if [ $(git rev-list --count HEAD) -eq 1 ]; then
+
+            echo "First commit detected. Listing all .sh files..."
+
+            git ls-files '*.sh' > changed_files.txt
+
+          else
+
+            echo "Listing added, modified, or renamed .sh files in the latest commit..."
+
+            # List all added or modified .sh files using git status
+
+            git status --short | grep '^[AM]' | grep '\.sh$' | awk '{print $2}' > changed_files.txt
+
+          fi
+
+          cat changed_files.txt
+
+
+
+      - name: Upload or update .sh files in GCS (Flattened)
+
+        if: success()
+
+        run: |
+
+          while IFS= read -r file; do
+
+            echo "Processing $file..."
+
+            if [ -f "$file" ]; then
+
+              base_name=$(basename "$file")
+
+              echo "Uploading $file to GCS as $base_name..."
+
+              gsutil cp "$file" gs://cloudhustler/"$base_name"
+
+            else
+
+              echo "File $file does not exist locally. Skipping..."
+
+            fi
+
+          done < changed_files.txt
+
+
+
+  upload-files-to-public-repo:
+
+    runs-on: ubuntu-latest
+
+    needs: upload-update-files  # Ensures this runs after the .sh files are uploaded
+
+
+
+    steps:
+
+      - name: Checkout code
+
+        uses: actions/checkout@v3
+
+
+
+      - name: Set up Git
+
+        run: |
+
+          git config --global user.name "Abhiraj-1604"
+
+          git config --global user.email "abhirajrode2004@gmail.com"
+
+
+
+      - name: Clone public repository
+
+        run: |
+
+          git clone https://github.com/Abhiraj-1604/cloudhustlerpublic.git
+
+        env:
+
+          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+
+
+
+      - name: Get changed files (excluding .sh, .txt, and .yml)
+
+        id: changed-files
+
+        run: |
+
+          # Check if this is the first commit
+
+          if [ $(git rev-list --count HEAD) -eq 1 ]; then
+
+            echo "First commit detected. Listing all files excluding .sh, .txt, and .yml files..."
+
+            git ls-files | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' > changed_files.txt
+
+          else
+
+            echo "Listing added, modified, or renamed files excluding .sh, .txt, and .yml files..."
+
+            git status --short | grep '^[AM]' | grep -v '\.sh$' | grep -v '\.txt$' | grep -v '\.yml$' | awk '{print $2}' > changed_files.txt || true
+
+          fi
+
+          cat changed_files.txt
+
+
+
+      - name: Copy files (excluding .sh, .txt, and .yml) to public repository (Preserve Structure)
+
+        run: |
+
+          while IFS= read -r file; do
+
+            echo "Copying $file to the public repository while preserving folder structure..."
+
+            mkdir -p "cloudhustlerpublic/$(dirname "$file")"
+
+            cp "$file" "cloudhustlerpublic/$file"
+
+          done < changed_files.txt
+
+
+
+      - name: Commit and push changes to public repository
+
+        run: |
+
+          cd cloudhustlerpublic
+
+          git add .  # Add all changes
+
+          git commit -m "Update files excluding .sh, .txt, and .yml (Preserve Structure)"
+
+          git push https://Abhiraj-1604:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Abhiraj-1604/cloudhustlerpublic.git
+
+        env:
+
+          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+
+
+
+
+
+this workflow is uploading every .sh file on every commit rather i want it to only upload newly added .sh files and updated .sh files
