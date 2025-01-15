@@ -44,10 +44,24 @@ jobs:
             if [ -f "$file" ]; then
               base_name=$(basename "$file")
               echo "Checking if $base_name exists in GCS..."
-              if gsutil -q stat gs://cloudhustler/"$base_name"; then
-                echo "$base_name already exists in GCS. Skipping upload."
+              
+              # Get the last modified timestamp of the file in GCS
+              GCS_MOD_TIME=$(gsutil stat gs://cloudhustler/"$base_name" 2>/dev/null | grep "Update time" | awk -F': ' '{print $2}')
+              
+              # Get the last modified timestamp of the local file
+              LOCAL_MOD_TIME=$(stat --format='%Y' "$file")
+
+              if [ -n "$GCS_MOD_TIME" ]; then
+                # If the file exists in GCS and is not modified, skip upload
+                if [ "$LOCAL_MOD_TIME" -le $(date -d "$GCS_MOD_TIME" +%s) ]; then
+                  echo "$base_name is up-to-date in GCS. Skipping upload."
+                else
+                  echo "Uploading updated $file to GCS..."
+                  gsutil cp "$file" gs://cloudhustler/"$base_name"
+                fi
               else
-                echo "Uploading $file as $base_name in GCS..."
+                # If the file does not exist in GCS, upload it
+                echo "Uploading new $file to GCS..."
                 gsutil cp "$file" gs://cloudhustler/"$base_name"
               fi
             else
