@@ -28,6 +28,8 @@ curl -LO https://raw.githubusercontent.com/Abhishek-kumar-202063/Cloud-Hustlers-
 chmod +x subscribe.sh
 ./subscribe.sh
 
+hello
+
 echo "${BG_GREEN}${BOLD}Starting Execution${RESET}"
 
 export PROJECT_ID=$(gcloud config get-value project)
