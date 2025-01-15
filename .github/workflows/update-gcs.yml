@@ -1,5 +1,3 @@
-name: Upload or Update Files in GCS and Public Repo (Preserve Structure)
-
 on:
   push:
     branches:
@@ -23,21 +21,13 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Get changed .sh files
+      - name: Get staged .sh files (added or modified)
         id: changed-files
         run: |
-          # Check if this is the first commit (no previous commit exists)
-          if [ $(git rev-list --count HEAD) -eq 1 ]; then
-            echo "First commit detected. Listing all .sh files..."
-            git ls-files '*.sh' > changed_files.txt
-          else
-            echo "Listing added, modified, or renamed .sh files in the latest commit..."
-            # List all added or modified .sh files using git status
-            git status --short | grep '^[AM]' | grep '\.sh$' | awk '{print $2}' > changed_files.txt
-          fi
+          git diff --cached --name-only --diff-filter=d | grep '\.sh$' > changed_files.txt
           cat changed_files.txt
 
-      - name: Upload or update .sh files in GCS (Flattened)
+      - name: Upload .sh files in GCS (Flattened)
         if: success()
         run: |
           while IFS= read -r file; do
@@ -47,7 +37,7 @@ jobs:
               echo "Uploading $file to GCS as $base_name..."
               gsutil cp "$file" gs://cloudhustler/"$base_name"
             else
-              echo "File $file does not exist locally. Skipping..."
+              echo "File $file not found in the staging area. Skipping..."
             fi
           done < changed_files.txt
 
