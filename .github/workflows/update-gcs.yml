@@ -2,8 +2,8 @@ name: Upload to GCS Bucket
 
 on:
   push:
-    paths:
-      - '**/*.sh'
+    branches:
+      - '**'
 
 jobs:
   upload-to-gcs:
@@ -37,9 +37,8 @@ name: Upload to Public GitHub Repository
 
 on:
   push:
-    paths-ignore:
-      - '**/*.txt'
-      - '**/*.yml'
+    branches:
+      - '**'
 
 jobs:
   upload-to-public-repo:
