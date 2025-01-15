@@ -1,4 +1,4 @@
-name: Upload to GCS Bucket
+name: Upload Files to GCS and Public Repo
 
 on:
   push:
@@ -31,16 +31,6 @@ jobs:
             fi
           done
 
----
-
-name: Upload to Public GitHub Repository
-
-on:
-  push:
-    branches:
-      - '**'
-
-jobs:
   upload-to-public-repo:
     runs-on: ubuntu-latest
 
