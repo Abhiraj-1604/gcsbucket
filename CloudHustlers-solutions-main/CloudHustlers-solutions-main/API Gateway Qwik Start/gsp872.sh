@@ -1,5 +1,5 @@
 #!/bin/bash
-# Define color variables !dadada
+# Define color variables !
 
 BLACK=`tput setaf 0`
 RED=`tput setaf 1`
