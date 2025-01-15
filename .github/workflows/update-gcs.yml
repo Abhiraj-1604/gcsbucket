@@ -1,60 +1,32 @@
-name: Upload Files to GCS and Public Repo
+name: Upload .sh Files to GCS
 
 on:
   push:
-    branches:
-      - '**'
+    paths:
+      - '**/*.sh' # Trigger workflow for .sh file changes
 
 jobs:
   upload-to-gcs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          version: 'latest'
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: 'latest'
 
-      - name: Authenticate to Google Cloud
-        env:
-          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-        run: echo "$GCP_SERVICE_ACCOUNT_KEY" | gcloud auth activate-service-account --key-file=-
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-      - name: Sync .sh files to GCS bucket
-        run: |
-          for file in $(git diff --name-only HEAD^ HEAD | grep ".sh$"); do
-            if [ -f "$file" ]; then
-              gsutil cp "$file" gs://cloudhustler/$file
-            fi
-          done
-
-  upload-to-public-repo:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Filter and copy files
-        run: |
-          mkdir upload
-          for file in $(git ls-files | grep -vE '\.(txt|yml)$'); do
-            mkdir -p upload/$(dirname "$file")
-            cp "$file" upload/"$file"
-          done
-
-      - name: Push files to public repository
-        env:
-          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
-        run: |
-          cd upload
-          git init
-          git remote add origin https://github.com/Abhiraj-1604/cloudhustlerpublic.git
-          git config --global user.name "Abhiraj-1604"
-          git config --global user.email "abhirajrode2004@gmail.com"
-          git add .
-          git commit -m "Update files"
-          git push https://x-access-token:${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/Abhiraj-1604/cloudhustlerpublic.git main --force
+    - name: Upload .sh files to GCS
+      run: |
+        for file in $(git diff --name-only HEAD^ HEAD | grep '\.sh$'); do
+          if [ -f "$file" ]; then
+            gsutil cp "$file" gs://cloudhustler/"$file"
+          fi
+        done
