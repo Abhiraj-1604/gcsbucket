@@ -1,5 +1,5 @@
 #!/bin/bash
-# Define color variables !
+# Define color variables !dadada
 
 BLACK=`tput setaf 0`
 RED=`tput setaf 1`
@@ -27,8 +27,6 @@ cd ~
 curl -LO https://raw.githubusercontent.com/Abhishek-kumar-202063/Cloud-Hustlers-Creativity/refs/heads/main/subscribe.sh
 chmod +x subscribe.sh
 ./subscribe.sh
-
-hello
 
 echo "${BG_GREEN}${BOLD}Starting Execution${RESET}"
 
